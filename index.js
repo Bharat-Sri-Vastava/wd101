@@ -1,3 +1,23 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const dobInput = document.getElementById("dob");
+    const currentDate = new Date();
+    const minDate = new Date(currentDate.getFullYear() - 55, currentDate.getMonth(), currentDate.getDate());
+    const maxDate = new Date(currentDate.getFullYear() - 18, currentDate.getMonth(), currentDate.getDate());
+    dobInput.setAttribute('min', minDate.toISOString().split('T')[0]);
+    dobInput.setAttribute('max', maxDate.toISOString().split('T')[0]);
+});
+const email = document.getElementById("email");
+email.addEventListener('input', () => validate(email));
+function validate(element) {
+    if (element.validity.typeMismatch) {
+        element.setCustomValidity("This email is not in the right format");
+        element.reportValidity();
+    } else {
+        element.setCustomValidity('');
+    }
+}
+
+
 let userForm = document.getElementById("user-form");
 const retrieveEntries = () => {
     let entries = localStorage.getItem("user-entries");
@@ -58,5 +78,7 @@ const saveUserForm = (event) => {
     displayEntries();
 
 }
+
+
 userForm.addEventListener("submit", saveUserForm);
 displayEntries();
